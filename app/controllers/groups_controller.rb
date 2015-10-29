@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
     @group = current_user.groups.create(group_params)
 
     if @group.save
+      current_user.join_in(@group)
       redirect_to groups_url
     else
       render :new
@@ -42,6 +43,28 @@ class GroupsController < ApplicationController
 
   def edit
     @group = current_user.groups.find(params[:id])
+  end
+
+  def join
+    @group = Group.find(params[:id])
+    if !current_user.is_member_of?(@group)
+      current_user.join_in(@group)
+      flash[:success] = "You have successfully joined the group!"
+    else
+      flash[:warning] = "You are already a member!"
+    end
+    redirect_to group_url(@group)
+  end
+
+  def quit
+    @group = Group.find(params[:id])
+    if current_user.is_member_of?(@group)
+      current_user.quit_from(@group)
+      flash[:success] = "You have successfully quitted the group!"
+    else
+      flash[:warning] = "You are not yet a member!"
+    end
+    redirect_to group_url(@group)
   end
 
   private

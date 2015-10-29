@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   before_action :find_group
   before_action :find_post, only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :membership_check, only:[:new, :create]
   def new
     @post = @group.posts.new
   end
@@ -46,6 +47,12 @@ class PostsController < ApplicationController
     if !@post
       redirect_to group_path(@group)
       flash[:danger] = "You cannot modify posts which belong to others!"
+    end
+  end
+  def membership_check
+    if !current_user.is_member_of?(@group)
+      redirect_to group_path(@group)
+      flash[:warning] = "You cannot post in this group if you are not a member!"
     end
   end
 end
