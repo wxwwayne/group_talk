@@ -15,6 +15,7 @@ class PostsController < ApplicationController
     end
   end
   def edit
+    # @post = current_user.posts.find(params[:id])
   end
   def update
     if @post.update(post_params)
@@ -40,6 +41,10 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = @group.posts.find(params[:id])
+    @post = current_user.posts.find_by(id=params[:id])
+    if !@post
+      redirect_to group_path(@group)
+      flash[:danger] = "You cannot modify posts which belong to others!"
+    end
   end
 end
