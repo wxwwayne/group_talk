@@ -7,6 +7,7 @@ class PostsController < ApplicationController
   end
   def create
     @post = @group.posts.build(post_params)
+    @post.user = current_user
     if @post.save
       redirect_to group_path(@group)
       flash[:success] = "Post create successful!"
