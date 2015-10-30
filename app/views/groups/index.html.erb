@@ -18,8 +18,8 @@
           <td><%= group.description %></td>
           <td>
             <% if current_user?(group.user) %>
-              <%= link_to("Edit", edit_group_path(group), class: "btn btn-sm btn-default")%>
-              <%= link_to("Delete", group_path(group),    class: "btn btn-sm btn-default",
+              <%= link_to("Edit", edit_group_path(group), class: "btn btn-sm btn-info")%>
+              <%= link_to("Delete", group_path(group),    class: "btn btn-sm btn-danger",
                           method: :delete, data: { confirm: "Are you sure?" } )%>
             <% end %>
           </td>

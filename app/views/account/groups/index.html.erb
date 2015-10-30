@@ -1,0 +1,32 @@
+<div class="col-md-12">
+  <h2 class="text-center">My Groups</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Post Count</th>
+        <th>Member Count</th>
+        <th>Last Update</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td>#</td>
+          <td><%= link_to(group.title, group_path(group)) %></td>
+          <td><%= truncate(group.description, length: 20) %></td>
+          <td><%= group.posts_count %></td>
+          <td><%= group.group_users.count %></td>
+          <td><%= group.updated_at.to_s(:long) %></td>
+          <td>
+            <%= link_to("Edit", edit_group_path(group), class:"btn btn-info btn-xs") %>
+            <%= link_to("Delete", group_path(group), class:"btn btn-danger btn-xs", method: :delete, data: { confirm: "Are you sure?" }) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
