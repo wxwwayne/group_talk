@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 describe "Routes" do
   describe "UsersController" do
     it "routes get new user" do

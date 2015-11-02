@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
   validates :title, presence: true
+  validates :user_id, presence: true
   default_scope -> { order(posts_count: :desc) }
   has_many :posts, dependent: :destroy
   belongs_to :user
