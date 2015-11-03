@@ -4,6 +4,14 @@ describe User do
     expect(build(:user)).to be_valid
   end
 
+  subject{ build(:user) }
+  # it "returns the email" do
+  #   should be_valid
+  #   should validate_presence_of :email
+  #   should have_many :groups
+  # end
+  specify { should be_valid }
+
   it "is invalid without email" do
     expect(build(:user, email: nil)).not_to be_valid
   end
