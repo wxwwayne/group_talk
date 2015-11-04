@@ -5,12 +5,16 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'groups#index'
-  resources :groups do
-    member do
-      post :join
-      post :quit
+  namespace :api do
+    namespace :v1 do
+      resources :groups do
+        member do
+          post :join
+          post :quit
+        end
+        resources :posts
+      end
     end
-    resources :posts
   end
 
   namespace :account do

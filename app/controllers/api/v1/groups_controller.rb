@@ -1,5 +1,6 @@
-class GroupsController < ApplicationController
+class Api::V1::GroupsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  skip_before_action :verify_authenticity_token
   def index
     @groups = Group.all
   end
@@ -18,7 +19,7 @@ class GroupsController < ApplicationController
 
     if @group.save
       current_user.join_in(@group)
-      redirect_to groups_url
+      redirect_to api_v1_groups_url
     else
       render :new
     end
@@ -27,14 +28,14 @@ class GroupsController < ApplicationController
   def destroy
     @group = current_user.groups.find(params[:id])
     @group.destroy
-    redirect_to groups_url
+    redirect_to api_v1_groups_url
     flash[:danger] = "Group has been deleted!"
   end
 
   def update
     @group = current_user.groups.find(params[:id])
     if @group.update(group_params)
-      redirect_to groups_url
+      redirect_to api_v1_groups_url
       flash[:success] = "Group update successful!"
     else
       render 'edit'
@@ -53,7 +54,7 @@ class GroupsController < ApplicationController
     else
       flash[:warning] = "You are already a member!"
     end
-    redirect_to group_url(@group)
+    redirect_to api_v1_group_url(@group)
   end
 
   def quit
@@ -64,7 +65,7 @@ class GroupsController < ApplicationController
     else
       flash[:warning] = "You are not yet a member!"
     end
-    redirect_to group_url(@group)
+    redirect_to api_v1_group_url(@group)
   end
 
   private

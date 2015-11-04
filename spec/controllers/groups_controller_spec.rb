@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe GroupsController do
+describe Api::V1::GroupsController do
   let(:user) { create(:user) }
   let(:group) { create(:group, user: user) }
   let(:other_user) { create(:user) }
@@ -25,7 +25,7 @@ describe GroupsController do
 
     it "redirects to root" do
       post :create, group: attributes_for(:group)
-      expect(response).to redirect_to groups_path
+      expect(response).to redirect_to api_v1_groups_url
     end
   end
 
