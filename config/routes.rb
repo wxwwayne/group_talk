@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'api/v1/groups#index'
-  namespace :api do
-    namespace :v1 do
+  scope :api do
+    scope :v1 do
       resources :groups do
         member do
           post :join
@@ -14,13 +14,17 @@ Rails.application.routes.draw do
         end
         resources :posts
       end
+      scope :account do
+        resources :groups
+        resources :posts
+      end
     end
   end
 
-  namespace :account do
-    resources :groups
-    resources :posts
-  end
+  # scope :account do
+  #   resources :groups
+  #   resources :posts
+  # end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -64,8 +68,8 @@ Rails.application.routes.draw do
   #   resources :posts, concerns: :toggleable
   #   resources :photos, concerns: :toggleable
 
-  # Example resource route within a namespace:
-  #   namespace :admin do
+  # Example resource route within a scope:
+  #   scope :admin do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
